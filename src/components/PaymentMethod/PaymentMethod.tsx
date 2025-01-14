@@ -9,7 +9,7 @@ type Prices = {
     isPhoneValid: boolean;
 }
 
-const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder, isPhoneValid  }: Prices) => {
+const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder, isPhoneValid }: Prices) => {
     const [paymentMethod, setPaymentMethod] = useState<string>('');
     const [cashOrCart, setCashOrCart] = useState<boolean | undefined>(undefined);
     const [change, setChange] = useState<string>('');
@@ -43,14 +43,13 @@ const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder
                 allMessages += `${item.name} x ${item.quantity} = ${item.price * item.quantity} сом\n`
             });
 
-            allMessages += `\nИтоговая сумма: ${allPrices}\n`;
 
-            allMessages += `Способ оплаты: ${paymentMethod === 'cash' ? 'наличные' : `картой`} \n`;
+            allMessages += `\nИтоговая сумма: ${allPrices} сом\n`;
+
+            allMessages += `Способ оплаты: ${paymentMethod === 'cash' ? 'наличные' : 'mbank'} \n`;
 
             if (paymentMethod === 'cash' && cashOrCart && wholeOrder !== null) {
                 allMessages += `${change} сом\n`
-            } else if (paymentMethod === 'card' && receiptLink) {
-                allMessages += `Ссылка на чек оплаты: ${receiptLink}\n`;
             }
 
             allMessages += `\nКонтактные данные\n`
@@ -67,7 +66,7 @@ const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder
 
     }
 
-    
+
     return (
         <>
             <section id="payment-method" className="payment-method">
@@ -78,11 +77,11 @@ const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder
                 </label>
                 <label>
                     <input id="cart" type="radio" name="payment" value="card" onClick={() => togglePaymentForm('card')} />
-                    <label htmlFor="cart">карта</label>
+                    <label htmlFor="cart">mbank</label>
                 </label>
             </section>
 
-            {paymentMethod === 'cash' ? (
+            {paymentMethod === 'cash' && (
                 <section id="cash-payment">
                     <h2>Введите сумму, на которую нужно дать сдачи</h2>
                     <input
@@ -93,20 +92,10 @@ const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder
                     />
                     <p id="change-info">{change}</p>
                 </section>
-            ) : paymentMethod === 'card' && (
-                <section>
-                    <h2>оплатите сумму заказа через мбанк и вставьте ссылку чека сюда</h2>
-                    <input
-                        type="text"
-                        placeholder="вставьте ссылку чека"
-                        value={receiptLink}
-                        onChange={(e) => setReceiptLink(e.target.value)}
-                    />
-                </section>
             )}
 
             <section id="submit-order">
-                <button disabled={!isPhoneValid} id="send-whatsapp" onClick={() => {handleSetOrder()}}>Отправить заказ</button>
+                <button disabled={!isPhoneValid} id="send-whatsapp" onClick={() => { handleSetOrder() }}>Отправить заказ</button>
             </section>
         </>
     )
