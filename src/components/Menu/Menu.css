@@ -1,0 +1,54 @@
+/* Стили для фильтра */
+.filter-section {
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    /* justify-content: center; */
+    gap: 15px;
+    /* flex-wrap: wrap; */
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-width: 150px; /* Добавляем минимальную ширину для кнопок */
+    text-align: center;
+}
+
+/* Эффекты при наведении */
+.filter-btn:hover {
+    background-color: #4c9671;
+    color: white;
+}
+
+.filter-btn.active {
+    background-color: white;
+    color: #4CAF50;
+    border: 3px solid #4CAF50;
+}
+
+/* Медиазапрос для экранов с шириной меньше 768px (мобильные устройства) */
+@media (max-width: 843px) {
+    .filter-section {
+        display: grid; /* Смена на grid */
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Автоматическое распределение кнопок по столбцам */
+        gap: 10px;
+    }
+
+    .filter-btn {
+        font-size: 0.9rem; /* Уменьшаем размер шрифта на маленьких экранах */
+        padding: 8px 15px; /* Меньше отступы на маленьких экранах */
+    }
+}
+
+/* Медиазапрос для экранов с шириной меньше 480px (очень маленькие экраны) */
+@media (max-width: 480px) {
+    .filter-section {
+        grid-template-columns: 1fr; /* Все кнопки в одну колонку */
+    }
+}
