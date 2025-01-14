@@ -13,7 +13,6 @@ const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder
     const [paymentMethod, setPaymentMethod] = useState<string>('');
     const [cashOrCart, setCashOrCart] = useState<boolean | undefined>(undefined);
     const [change, setChange] = useState<string>('');
-    const [receiptLink, setReceiptLink] = useState<string>('');
 
     const togglePaymentForm = (typePay: string) => {
         if (typePay === 'cash') {
