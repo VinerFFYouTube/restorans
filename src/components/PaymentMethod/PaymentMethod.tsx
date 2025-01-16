@@ -10,32 +10,33 @@ type Prices = {
 }
 
 const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder, isPhoneValid }: Prices) => {
-    const [paymentMethod, setPaymentMethod] = useState<string>('');
-    const [cashOrCart, setCashOrCart] = useState<boolean | undefined>(undefined);
-    const [change, setChange] = useState<string>('');
 
-    const togglePaymentForm = (typePay: string) => {
-        if (typePay === 'cash') {
-            setPaymentMethod('cash')
-        } else {
-            setPaymentMethod('card')
-        }
-    }
+    // const [paymentMethod, setPaymentMethod] = useState<string>('');
+    // const [cashOrCart, setCashOrCart] = useState<boolean | undefined>(undefined);
+    // const [change, setChange] = useState<string>('');
 
-    const priceCounter = (inputCash: number) => {
-        const parseInputCash = +inputCash;
-        if (parseInputCash < allPrices) {
-            setCashOrCart(false)
-            setChange('ваша сумма не соотвествует сумме заказа');
-        } else if (parseInputCash > allPrices) {
-            setCashOrCart(true);
-            setChange(`ваша сдача: ${inputCash - allPrices}`);
-        }
-    }
+    // const togglePaymentForm = (typePay: string) => {
+    //     if (typePay === 'cash') {
+    //         setPaymentMethod('cash')
+    //     } else {
+    //         setPaymentMethod('card')
+    //     }
+    // }
+
+    // const priceCounter = (inputCash: number) => {
+    //     const parseInputCash = +inputCash;
+    //     if (parseInputCash < allPrices) {
+    //         setCashOrCart(false)
+    //         setChange('ваша сумма не соотвествует сумме заказа');
+    //     } else if (parseInputCash > allPrices) {
+    //         setCashOrCart(true);
+    //         setChange(`ваша сдача: ${inputCash - allPrices}`);
+    //     }
+    // }
 
     const handleSetOrder = () => {
         let dataMessage = new Date();
-        if (userName && userNumber && userAddres) {
+        if (userName.trim() && userNumber.trim() && userAddres.trim()) {
             let allMessages = `Заказ от ${userName}:\nдата заказа: ${dataMessage.toLocaleDateString()}\n`
 
             wholeOrder.forEach(item => {
@@ -45,11 +46,11 @@ const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder
 
             allMessages += `\nИтоговая сумма: ${allPrices} сом\n`;
 
-            allMessages += `Способ оплаты: ${paymentMethod === 'cash' ? 'наличные' : 'mbank'} \n`;
+            // allMessages += `Способ оплаты: ${paymentMethod === 'cash' ? 'наличные' : 'mbank'} \n`;
 
-            if (paymentMethod === 'cash' && cashOrCart && wholeOrder !== null) {
-                allMessages += `${change} сом\n`
-            }
+            // if (paymentMethod === 'cash' && cashOrCart && wholeOrder !== null) {
+            //     allMessages += `${change} сом\n`
+            // }
 
             allMessages += `\nКонтактные данные\n`
             allMessages += `Имя: ${userName}\n`
@@ -59,16 +60,15 @@ const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder
             const numberCafe = '996999577020';
             const whatsappUrl = `https://wa.me/${numberCafe}?text=${encodeURIComponent(allMessages)}`;
             window.open(whatsappUrl, "_blank");
-        } else {
-            alert('пожалуйста заполните все данные')
         }
 
     }
 
 
+
     return (
         <>
-            <section id="payment-method" className="payment-method">
+            {/* <section id="payment-method" className="payment-method">
                 <h2>Выберите способ оплаты</h2>
                 <label>
                     <input id="cash" type="radio" name="payment" value="cash" onClick={() => togglePaymentForm('cash')} />
@@ -91,9 +91,10 @@ const PaymentMethod = ({ allPrices, userName, userNumber, userAddres, wholeOrder
                     />
                     <p id="change-info">{change}</p>
                 </section>
-            )}
+            )} */}
 
             <section id="submit-order">
+                {(!userName.trim() || !userNumber.trim() || !userAddres.trim()) && <p style={{ textAlign: "center", color: 'red' }}>Вы не заполнили все данные</p>}
                 <button disabled={!isPhoneValid} id="send-whatsapp" onClick={() => { handleSetOrder() }}>Отправить заказ</button>
             </section>
         </>
